@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000/")
 public class GameController {
 
     private GameService gameService;
