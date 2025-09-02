@@ -1,16 +1,20 @@
-import { solveMessage } from "../../api/gameApi"
+import { useState } from "react";
 
 export default function Messageboard({ messages, gameId, onMessageSolved }) {
-    const handleSolve = async (adId) => {
-        try {
-            const result = await solveMessage(gameId, adId);
-            console.log("Message solved: ", result);
+    const [solving, setSolving] = useState({});
 
-            if (onMessageSolved) onMessageSolved(result);
+    const handleSolve = async (adId) => {
+        if (solving[adId]) return;
+
+        setSolving((prev) => ({ ...prev, [adId]: true }));
+        try {
+            await onMessageSolved(adId);
         } catch (error) {
-            console.log("failed to solve message: ", error);
+            console.error("Failed to solve message:", error);
+        } finally {
+            setSolving((prev) => ({ ...prev, [adId]: false }));
         }
-    }
+    };
 
     if (!messages || messages.length === 0) {
         return null
