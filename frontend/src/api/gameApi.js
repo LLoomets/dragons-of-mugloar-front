@@ -19,3 +19,13 @@ export const getMessages = async (gameId) => {
     if(!response.ok) throw new Error("failed to fetch messages");
     return response.json();
 }
+
+export const getReputation = async (gameId) => {
+    const response = await fetch(`${BASE_URL}/${gameId}/investigate/reputation`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+    })
+
+    if(!response.ok) throw new Error("failed to fetch reputation");
+    return response.json();
+}

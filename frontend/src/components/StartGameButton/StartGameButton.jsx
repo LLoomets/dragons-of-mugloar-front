@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { startGame as apiStartGame, getMessages } from "../../api/gameApi";
+import { startGame as apiStartGame, getMessages, getReputation } from "../../api/gameApi";
 import Messageboard from "../Messageboard/Messageboard";
+import ReputationBoard from "../ReputationBoard/ReputationBoard";
 
 export default function StartGameButton() {
     const [game, setGame] = useState(null);
-    const [messages, setMessages] = useState(null);
+    const [messages, setMessages] = useState([]);
+    const [reputation, setReputation] = useState(null);
 
     const startGame = async () => {
         console.log("Starting game...");
@@ -17,6 +19,10 @@ export default function StartGameButton() {
             const msgs = await getMessages(newGame.gameId);
             setMessages(msgs);
             console.log("Messages fetched: ", msgs);
+
+            const rep = await getReputation(newGame.gameId);
+            setReputation(rep);
+            console.log("Reputation fetched: ", rep);
         } catch (error) {
             console.log("Starting game failed:", error);
         }
@@ -38,6 +44,7 @@ export default function StartGameButton() {
             )}
 
             <Messageboard messages={messages} />
+            <ReputationBoard reputation={reputation} />
         </div>
     );
 }
