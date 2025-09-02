@@ -7,50 +7,56 @@ export default function useGame() {
     const [reputation, setReputation] = useState(null);
     const [shopItems, setShopItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [isGameOver, setIsGameOver] = useState(false);
+
+    const fetchGameData = async (gameId) => {
+        const [mgs, rep, items] = await Promise.all([
+            getMessages(gameId),
+            getReputation(gameId),
+            getShopItems(gameId),
+        ]);
+
+        setMessages(mgs);
+        setReputation(rep);
+        setShopItems(items);
+    }
 
     const startGame = async () => {
         setLoading(true);
         try {
             const newGame = await apiStartGame();
             setGame(newGame);
-
-            const [mgs, rep, items] = await Promise.all([
-                getMessages(newGame.gameId),
-                getReputation(newGame.gameId),
-                getShopItems(newGame.gameId),
-            ]);
-
-            setMessages(mgs);
-            setReputation(rep);
-            setShopItems(items);
+            setIsGameOver(false);
+            await fetchGameData(newGame.gameId);
         } catch (error) {
-            console.log(error);
+            console.log("failed to start game: ",error);
         } finally {
             setLoading(false);
         }
     }
 
     const handleSolve = async (adId) => {
+        if (!game.gameId || isGameOver) return;
+
         setLoading(true);
         try {
             const result = await solveMessage(game.gameId, adId);
             console.log("Message solved:", result);
 
-            setGame((prev) => ({
-                ...prev,
-                lives: result.lives,
-                gold: result.gold,
-                score: result.score,
-                turn: result.turn,
-            }));
-
-            const [updatedMessages, updatedReputation] = await Promise.all([
-                getMessages(game.gameId),
-                getReputation(game.gameId),
-            ]);
-
-            setMessages(updatedMessages);
-            setReputation(updatedReputation);
+            setGame((prev) => {
+                const updated = {
+                    ...prev,
+                    lives: result.lives,
+                    gold: result.gold,
+                    score: result.score,
+                    turn: result.turn,
+                };
+                if (updated.lives <= 0) {
+                    setIsGameOver(true);
+                }
+                return updated;
+            });
+            await fetchGameData(game.gameId);
         } catch (error) {
             console.error("Failed to solve message:", error.response?.data || error);
         } finally {
@@ -58,5 +64,5 @@ export default function useGame() {
         }
     };
 
-    return { game, messages, reputation, shopItems, startGame, handleSolve };
+    return { game, messages, reputation, shopItems, isGameOver, startGame, handleSolve };
 }
