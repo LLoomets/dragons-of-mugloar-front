@@ -20,6 +20,16 @@ export const getMessages = async (gameId) => {
     return response.json();
 }
 
+export const solveMessage = async (gameId, adId) => {
+    const response = await fetch(`${BASE_URL}/${gameId}/solve/${adId}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+    })
+
+    if(!response.ok) throw new Error("failed to solve message");
+    return response.json();
+}
+
 export const getReputation = async (gameId) => {
     const response = await fetch(`${BASE_URL}/${gameId}/investigate/reputation`, {
         method: "POST",

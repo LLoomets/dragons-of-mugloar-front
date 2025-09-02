@@ -21,7 +21,7 @@ export default function StartGameButton() {
                 </div>
             )}
 
-            <Messageboard messages={messages} />
+            <Messageboard messages={messages} gameId={game?.gameId} />
             <ReputationBoard reputation={reputation} />
             <Shop items={shopItems} />
         </div>
