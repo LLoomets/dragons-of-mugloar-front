@@ -1,11 +1,10 @@
 import './App.css';
+import StartGameButton from './components/StartGameButton/StartGameButton';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>Siia tuleb meie rakendus</p>
-      </header>
+    <div>
+      <StartGameButton />
     </div>
   );
 }
