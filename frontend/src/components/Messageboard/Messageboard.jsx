@@ -1,6 +1,6 @@
 export default function Messageboard({ messages }) {
     if (!messages || messages.length === 0) {
-        return <p>There's no messages available</p>
+        return null
     }
 
     return (

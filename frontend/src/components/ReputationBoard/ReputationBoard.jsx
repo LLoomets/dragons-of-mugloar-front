@@ -1,6 +1,6 @@
 export default function ReputationBoard({ reputation }) {
     if (!reputation) {
-        return <p>No reputation data</p>
+        return null
     }
 
     return (

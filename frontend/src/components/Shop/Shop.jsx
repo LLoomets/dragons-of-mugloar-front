@@ -1,6 +1,6 @@
 export default function Shop({ items }) {
     if (!items || items.length === 0) {
-        return <p>There's no items available</p>
+        return null
     }
 
     return (
