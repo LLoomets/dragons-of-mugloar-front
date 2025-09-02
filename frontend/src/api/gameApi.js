@@ -29,3 +29,12 @@ export const getReputation = async (gameId) => {
     if(!response.ok) throw new Error("failed to fetch reputation");
     return response.json();
 }
+
+export const getShopItems = async (gameId) => {
+    const response = await fetch(`${BASE_URL}/${gameId}/shop`, {
+        method: "GET",
+    })
+
+    if(!response.ok) throw new Error("failed to fetch items");
+    return response.json();
+}
