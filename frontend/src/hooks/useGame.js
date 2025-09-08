@@ -8,6 +8,7 @@ export default function useGame() {
     const [shopItems, setShopItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [isGameOver, setIsGameOver] = useState(false);
+    const [showReputation, setShowReputation] = useState(false);
 
     const fetchGameData = async (gameId) => {
         const [mgs, items] = await Promise.all([
@@ -59,6 +60,8 @@ export default function useGame() {
             
             const updatedMessages = await getMessages(game.gameId);
             setMessages(updatedMessages);
+
+            setShowReputation(false);
         } catch (error) {
             console.error("Failed to solve message:", error.response?.data || error);
         } finally {
@@ -84,6 +87,8 @@ export default function useGame() {
 
             const updatedMessages = await getMessages(game.gameId);
             setMessages(updatedMessages);
+
+            setShowReputation(false);
         } catch (error) {
             console.error("failed to buy item: ", error.response?.data || error);
         }
@@ -103,6 +108,7 @@ export default function useGame() {
             }))
 
             setReputation(result);
+            setShowReputation(true);
 
             const updatedMessages = await getMessages(game.gameId);
             setMessages(updatedMessages);
@@ -113,5 +119,5 @@ export default function useGame() {
         }
     }
 
-    return { game, messages, reputation, shopItems, isGameOver, startGame, handleSolve, handleBuyItem, handleInvestigateReputation };
+    return { game, messages, reputation, shopItems, isGameOver, startGame, handleSolve, handleBuyItem, handleInvestigateReputation, showReputation };
 }
