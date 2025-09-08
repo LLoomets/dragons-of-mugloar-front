@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { startGame as apiStartGame, getMessages, getReputation, getShopItems, solveMessage } from "../api/gameApi";
+import { startGame as apiStartGame, getMessages, getReputation, getShopItems, solveMessage, buyItem } from "../api/gameApi";
 
 export default function useGame() {
     const [game, setGame] = useState(null);
@@ -64,5 +64,28 @@ export default function useGame() {
         }
     };
 
-    return { game, messages, reputation, shopItems, isGameOver, startGame, handleSolve };
+    const handleBuyItem = async (itemId) => {
+        if (!game.gameId || isGameOver) return;
+
+        setLoading(true);
+        try {
+            const result = await buyItem(game.gameId, itemId);
+            console.log("Item bought: ", result);
+
+            setGame((prev) => ({
+                    ...prev,
+                    lives: result.lives,
+                    gold: result.gold,
+                    level: result.level,
+                    turn: result.turn,
+            }));
+
+            const updatedMessages = await getMessages(game.gameId);
+            setMessages(updatedMessages);
+        } catch (error) {
+            console.error("failed to buy item: ", error.response?.data || error);
+        }
+    }
+
+    return { game, messages, reputation, shopItems, isGameOver, startGame, handleSolve, handleBuyItem };
 }

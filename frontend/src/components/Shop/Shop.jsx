@@ -1,4 +1,4 @@
-export default function Shop({ items }) {
+export default function Shop({ items, onBuy }) {
     if (!items || items.length === 0) {
         return null
     }
@@ -11,6 +11,7 @@ export default function Shop({ items }) {
                     <li key={i.id}>
                         <span>Name: {i.name}</span>
                         <span>Cost: {i.cost}</span>
+                        <button onClick={() => onBuy(i.id)}>Buy</button>
                     </li>
                 ))}
             </ul>

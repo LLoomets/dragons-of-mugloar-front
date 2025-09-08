@@ -4,7 +4,7 @@ import Shop from "../Shop/Shop";
 import useGame from "../../hooks/useGame";
 
 export default function StartGameButton() {
-    const { game, messages, reputation, shopItems, loading, isGameOver, startGame, handleSolve } = useGame();
+    const { game, messages, reputation, shopItems, loading, isGameOver, startGame, handleSolve, handleBuyItem } = useGame();
 
     return (
         <div>
@@ -35,7 +35,7 @@ export default function StartGameButton() {
                 <div>
                     <Messageboard messages={messages} gameId={game?.gameId} onMessageSolved={handleSolve} />
                     <ReputationBoard reputation={reputation} />
-                    <Shop items={shopItems} />
+                    <Shop items={shopItems} onBuy={handleBuyItem} />
                 </div>
             )}
             

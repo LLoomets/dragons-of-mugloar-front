@@ -48,3 +48,13 @@ export const getShopItems = async (gameId) => {
     if(!response.ok) throw new Error("failed to fetch items");
     return response.json();
 }
+
+export const buyItem = async (gameId, itemId) => {
+    const response = await fetch(`${BASE_URL}/${gameId}/shop/buy/${itemId}`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},  
+    })
+
+    if(!response.ok) throw new Error("failed to buy item");
+    return response.json();
+}
