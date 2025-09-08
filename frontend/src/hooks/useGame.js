@@ -10,14 +10,12 @@ export default function useGame() {
     const [isGameOver, setIsGameOver] = useState(false);
 
     const fetchGameData = async (gameId) => {
-        const [mgs, rep, items] = await Promise.all([
+        const [mgs, items] = await Promise.all([
             getMessages(gameId),
-            getReputation(gameId),
             getShopItems(gameId),
         ]);
 
         setMessages(mgs);
-        setReputation(rep);
         setShopItems(items);
     }
 
@@ -25,6 +23,8 @@ export default function useGame() {
         setLoading(true);
         try {
             const newGame = await apiStartGame();
+
+            setReputation(null);
             setGame(newGame);
             setIsGameOver(false);
             await fetchGameData(newGame.gameId);
@@ -56,7 +56,9 @@ export default function useGame() {
                 }
                 return updated;
             });
-            await fetchGameData(game.gameId);
+            
+            const updatedMessages = await getMessages(game.gameId);
+            setMessages(updatedMessages);
         } catch (error) {
             console.error("Failed to solve message:", error.response?.data || error);
         } finally {
@@ -87,5 +89,29 @@ export default function useGame() {
         }
     }
 
-    return { game, messages, reputation, shopItems, isGameOver, startGame, handleSolve, handleBuyItem };
+    const handleInvestigateReputation = async () => {
+        if (!game.gameId || isGameOver) return;
+
+        setLoading(true);
+        try {
+            const result = await getReputation(game.gameId);
+            console.log("Reputation: ", result);
+
+            setGame((prev) => ({
+                ...prev,
+                turn: prev.turn + 1,
+            }))
+
+            setReputation(result);
+
+            const updatedMessages = await getMessages(game.gameId);
+            setMessages(updatedMessages);
+        } catch (error) {
+            console.error("failed to get reputation: ", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    return { game, messages, reputation, shopItems, isGameOver, startGame, handleSolve, handleBuyItem, handleInvestigateReputation };
 }
