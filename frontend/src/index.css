@@ -1,0 +1,11 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: url(/public/bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "IM Fell English", serif;
+}
