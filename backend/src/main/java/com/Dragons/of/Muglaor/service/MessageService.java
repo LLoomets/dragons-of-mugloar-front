@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 
@@ -24,8 +25,25 @@ public class MessageService {
     }
 
     public SolvedMessage solveMessage(String gameId, String adId) {
-        String url = baseURL + "/" + gameId + "/solve/" + adId;
+        String realAdId = normalizeAdId(adId);
+        String url = baseURL + "/" + gameId + "/solve/" + realAdId;
         return restTemplate.postForObject(url, null, SolvedMessage.class);
+    }
+
+    private String normalizeAdId(String adId) {
+        if (adId == null || adId.isEmpty()) return adId;
+
+        try {
+            byte[] decodedBytes = Base64.getDecoder().decode(adId);
+            String decoded = new String(decodedBytes);
+            if (decoded.chars().allMatch(c -> c >= 32 && c <= 126)) {
+                return decoded;
+            } else {
+                return adId;
+            }
+        } catch (IllegalArgumentException e) {
+            return adId;
+        }
     }
 
     public Message chooseMessage(List<Message> messages) {

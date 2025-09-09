@@ -1,5 +1,20 @@
 import { useState } from "react";
 
+const isBase64 = (str) => {
+    try {
+        return btoa(atob(str)) === str;
+    } catch (err) {
+        return false;
+    }
+}
+
+const decodeMessage = (msg) => {
+    if(isBase64(msg)) {
+        return atob(msg);
+    }
+    return msg;
+}
+
 export default function Messageboard({ messages, gameId, onMessageSolved }) {
     const [solving, setSolving] = useState({});
 
@@ -8,6 +23,7 @@ export default function Messageboard({ messages, gameId, onMessageSolved }) {
 
         setSolving((prev) => ({ ...prev, [adId]: true }));
         try {
+            console.log("Solving adId:", adId, "gameId:", gameId);
             await onMessageSolved(adId);
         } catch (error) {
             console.error("Failed to solve message:", error);
@@ -26,10 +42,10 @@ export default function Messageboard({ messages, gameId, onMessageSolved }) {
             <ul>
                 {messages.map((msg) => (
                     <li key={msg.adId}>
-                        <span>{msg.message}</span>
+                        <span>{decodeMessage(msg.message)}</span>
                         <span>Reward: {msg.reward}</span>
                         <span>Expires in: {msg.expiresIn} turns</span>
-                        <span>Probability: {msg.probability}</span>
+                        <span>Probability: {decodeMessage(msg.probability)}</span>
                         <button onClick={() => handleSolve(msg.adId)}>Solve</button>
                     </li>
                 ))}
