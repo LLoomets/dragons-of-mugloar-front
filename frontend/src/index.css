@@ -9,3 +9,18 @@ body {
     background-attachment: fixed;
     font-family: "IM Fell English", serif;
 }
+
+h2 {
+    font-size: 2rem;
+}
+
+button {
+    background-color: rgb(94, 60, 44);
+    color: #fff;
+    cursor: pointer;
+    font-family: "IM Fell English", serif;
+}
+
+button:hover {
+    background-color: rgb(141, 92, 70);
+}

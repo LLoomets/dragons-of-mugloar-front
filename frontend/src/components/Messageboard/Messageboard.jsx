@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Messageboard.css";
 
 const isBase64 = (str) => {
     try {
@@ -39,17 +40,28 @@ export default function Messageboard({ messages, gameId, onMessageSolved }) {
     return (
         <div>
             <h2>Messages</h2>
-            <ul>
-                {messages.map((msg) => (
-                    <li key={msg.adId}>
-                        <span>{decodeMessage(msg.message)}</span>
-                        <span>Reward: {msg.reward}</span>
-                        <span>Expires in: {msg.expiresIn} turns</span>
-                        <span>Probability: {decodeMessage(msg.probability)}</span>
-                        <button onClick={() => handleSolve(msg.adId)}>Solve</button>
-                    </li>
-                ))}
-            </ul>
+            <table className="messages-table">
+                <thead>
+                    <tr>
+                        <th>Message</th>
+                        <th>Reward</th>
+                        <th>Expires in</th>
+                        <th>Probability</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {messages.map((msg) => (
+                        <tr key={msg.adId}>
+                            <td>{decodeMessage(msg.message)}</td>
+                            <td>{msg.reward} gold</td>
+                            <td>{msg.expiresIn} turns</td>
+                            <td>{decodeMessage(msg.probability)}</td>
+                            <td><button onClick={() => handleSolve(msg.adId)}>{solving[msg.adId] ? "..." : "Solve"}</button></td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     )
 }
