@@ -3,9 +3,9 @@
     border-collapse: collapse;
     margin-top: 1rem;
     table-layout: fixed;
-    background-image: url(/public/wood-texture.jpg);
+    background-image: var(--board-background);
     background-size: cover;
-    color: #f0e6d2;
+    color: var(--light-text);
 }
 
 .messages-table th,
@@ -52,11 +52,4 @@
 
 .messages-table tr:nth-child(even) td {
     background-color: rgba(0, 0, 0, 0.4);
-}
-
-.messages-table button {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
 }

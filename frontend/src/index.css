@@ -1,8 +1,16 @@
+:root {
+    --game-backround: url(/public/bg.jpg);
+    --board-background: url(/public/wood-texture.jpg);
+    --brown1: rgb(122, 80, 65);
+    --brown2: rgb(165, 110, 85);
+    --light-text: #f0e6d2;
+}
+
 html,
 body {
     margin: 0;
     padding: 0;
-    background: url(/public/bg.jpg);
+    background: var(--game-backround);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -15,12 +23,16 @@ h2 {
 }
 
 button {
-    background-color: rgb(122, 80, 65);
-    color: #fff;
+    background-color: var(--brown1);
+    color: var(--light-text);
     cursor: pointer;
     font-family: "IM Fell English", serif;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
 }
 
 button:hover {
-    background-color: rgb(165, 110, 85);
+    background-color: var(--brown2);
 }

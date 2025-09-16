@@ -1,0 +1,46 @@
+.shop-table {
+    width: 70%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    table-layout: fixed;
+    background-image: var(--board-background);
+    background-size: cover;
+    color: var(--light-text);
+}
+
+.shop-table th,
+.shop-table td {
+    border: 1px solid #000;
+    padding: 0.5rem 1rem;
+    text-align: left;
+}
+
+.shop-table th {
+    background-color: rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+}
+
+.shop-table tr:nth-child(odd) td {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.shop-table tr:nth-child(even) td {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.shop-table th:nth-child(1),
+.shop-table td:nth-child(1) {
+    width: 30%;
+}
+
+.shop-table th:nth-child(2),
+.shop-table td:nth-child(2) {
+    width: 30%;
+}
+
+.shop-table th:nth-child(3),
+.shop-table td:nth-child(3) {
+    width: 10%;
+    text-align: center;
+}
