@@ -89,6 +89,7 @@ export default function useGame() {
             setMessages(updatedMessages);
 
             setShowReputation(false);
+            return result;
         } catch (error) {
             console.error("failed to buy item: ", error.response?.data || error);
         }

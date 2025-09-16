@@ -1,11 +1,19 @@
 import Messageboard from "../Messageboard/Messageboard";
 import ReputationBoard from "../ReputationBoard/ReputationBoard";
 import Shop from "../Shop/Shop";
+import PurchaseResult from "../PurchaseResult/PurchaseResult";
 import useGame from "../../hooks/useGame";
 import "./StartGameButton.css";
+import { useState } from "react";
 
 export default function StartGameButton() {
     const { game, messages, reputation, shopItems, loading, isGameOver, startGame, handleSolve, handleBuyItem, handleInvestigateReputation, showReputation } = useGame();
+    const [purchaseResult, setPurchaseResult] = useState(null);
+
+    const handleBuy = async (itemId) => {
+    const result = await handleBuyItem(itemId);
+    setPurchaseResult(result);
+}
 
     return (
         <div className="game-container">
@@ -42,7 +50,8 @@ export default function StartGameButton() {
                     <div>
                         <Messageboard messages={messages} gameId={game?.gameId} onMessageSolved={handleSolve} />
                         <ReputationBoard reputation={reputation} game={game} onInvestigate={handleInvestigateReputation} showReputation={showReputation} />
-                        <Shop items={shopItems} onBuy={handleBuyItem} />
+                        <Shop items={shopItems} onBuy={handleBuy} />
+                        <PurchaseResult result={purchaseResult} onClose={() => setPurchaseResult(null)} />
                     </div>
                 )}
             </div>
