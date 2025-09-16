@@ -31,16 +31,21 @@
 
 .shop-table th:nth-child(1),
 .shop-table td:nth-child(1) {
-    width: 30%;
+    width: 20%;
 }
 
 .shop-table th:nth-child(2),
 .shop-table td:nth-child(2) {
-    width: 30%;
+    width: 20%;
 }
 
 .shop-table th:nth-child(3),
 .shop-table td:nth-child(3) {
+    width: 20%;
+}
+
+.shop-table th:nth-child(4),
+.shop-table td:nth-child(4) {
     width: 10%;
     text-align: center;
 }

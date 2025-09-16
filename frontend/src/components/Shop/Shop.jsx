@@ -5,6 +5,12 @@ export default function Shop({ items, onBuy }) {
         return null
     }
 
+    const getEffect = (cost) => {
+        if (cost === 50) return "+1 life";
+        if (cost === 100) return "+1 level";
+        if (cost === 300) return "+2 level";
+    }
+
     return (
         <div>
             <h2>Item shop</h2>
@@ -13,6 +19,7 @@ export default function Shop({ items, onBuy }) {
                     <tr>
                         <th>Item name</th>
                         <th>Cost</th>
+                        <th>Effect</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -21,6 +28,7 @@ export default function Shop({ items, onBuy }) {
                         <tr key={i.id}>
                             <td>{i.name}</td>
                             <td>{i.cost} gold</td>
+                            <td>{getEffect(i.cost)}</td>
                             <td><button onClick={() => onBuy(i.id)}>Buy</button></td>
                         </tr>
                     ))}
