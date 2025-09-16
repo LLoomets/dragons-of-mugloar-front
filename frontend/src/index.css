@@ -15,12 +15,12 @@ h2 {
 }
 
 button {
-    background-color: rgb(94, 60, 44);
+    background-color: rgb(122, 80, 65);
     color: #fff;
     cursor: pointer;
     font-family: "IM Fell English", serif;
 }
 
 button:hover {
-    background-color: rgb(141, 92, 70);
+    background-color: rgb(165, 110, 85);
 }

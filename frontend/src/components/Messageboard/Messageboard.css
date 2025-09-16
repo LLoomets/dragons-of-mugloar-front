@@ -3,11 +3,14 @@
     border-collapse: collapse;
     margin-top: 1rem;
     table-layout: fixed;
+    background-image: url(/public/wood-texture.jpg);
+    background-size: cover;
+    color: #f0e6d2;
 }
 
 .messages-table th,
 .messages-table td {
-    border: 1px solid #ccc;
+    border: 1px solid #000;
     padding: 0.5rem 1rem;
     text-align: left;
 }
@@ -39,11 +42,16 @@
 }
 
 .messages-table th {
-    background-color: #fafafa;
+    background-color: rgba(0, 0, 0, 0.4);
+    font-weight: bold;
 }
 
-.messages-table tr:nth-child(even) {
-    background-color: #fafafa;
+.messages-table tr:nth-child(odd) td {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.messages-table tr:nth-child(even) td {
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .messages-table button {
